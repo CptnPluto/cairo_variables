@@ -1,32 +1,46 @@
-/// Interface representing `HelloContract`.
-/// This interface allows modification and retrieval of the contract balance.
-#[starknet::interface]
-pub trait IHelloStarknet<TContractState> {
-    /// Increase contract balance.
-    fn increase_balance(ref self: TContractState, amount: felt252);
-    /// Retrieve contract balance.
-    fn get_balance(self: @TContractState) -> felt252;
+fn main() {
+    let mut x: u32 = 5;  // Declares a mutable variable. Because the variable is not redelcared, the type cannot change.
+    println!("The value of x is: {}", x);
+    x = 6;
+    println!("The value of x is: {}", x);
+    x = 'U_abc';
+    println!("The value of x is: {}", x);
+    
+    let y: u32 = 2;
+    println!("The value of y is {}", y);
+    let y: u32 = 3;
+    println!("The value of y is {}", y);
+    let y: felt252 = y.into();
+    let y = 'abc';
+
+    println!("The value of y is {}", y);
+    
+    printConstants();
+
 }
 
-/// Simple contract for managing balance.
-#[starknet::contract]
-mod HelloStarknet {
-    use core::starknet::storage::{StoragePointerReadAccess, StoragePointerWriteAccess};
+struct AnyStruct {
+    a: u256,
+    b: u32,
+}
 
-    #[storage]
-    struct Storage {
-        balance: felt252,
-    }
+enum AnyEnum {
+    Variant1: u8,
+    Variant2: u16,
+    Variant3: u32,
+    Variant4: (usize, u256),
+    Variant5: felt252,
+}
 
-    #[abi(embed_v0)]
-    impl HelloStarknetImpl of super::IHelloStarknet<ContractState> {
-        fn increase_balance(ref self: ContractState, amount: felt252) {
-            assert(amount != 0, 'Amount cannot be 0');
-            self.balance.write(self.balance.read() + amount);
-        }
+const ONE_HOUR_IN_SECONDS: u32 = 3600;
+const STRUCT_INSTANCE: AnyStruct  = AnyStruct { a: 0, b: 1};
+const ENUM_INSTANCE: AnyEnum = AnyEnum::Variant5 ('anyname');
+const BOOL_FIXED_SIZE_ARRAY: [bool; 2] = [true, false];
 
-        fn get_balance(self: @ContractState) -> felt252 {
-            self.balance.read()
-        }
-    }
+fn printConstants() {
+    println!("{}", ONE_HOUR_IN_SECONDS);
+    // println!("{}", STRUCT_INSTANCE);  - Can't print Structs
+    // println!("{}", ENUM_INSTANCE); - Can't print Enums
+    // println!("{}", BOOL_FIXED_SIZE_ARRAY); - Can't print Arrays.
+
 }
