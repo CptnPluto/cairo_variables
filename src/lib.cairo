@@ -1,22 +1,8 @@
 fn main() {
-    let mut x: u32 = 5;  // Declares a mutable variable. Because the variable is not redelcared, the type cannot change.
-    println!("The value of x is: {}", x);
-    x = 6;
-    println!("The value of x is: {}", x);
-    x = 'U_abc';
-    println!("The value of x is: {}", x);
-    
-    let y: u32 = 2;
-    println!("The value of y is {}", y);
-    let y: u32 = 3;
-    println!("The value of y is {}", y);
-    let y: felt252 = y.into();
-    let y = 'abc';
-
-    println!("The value of y is {}", y);
-    
-    printConstants();
-
+    let x: u64 = 10;
+    let y: felt252 = x.try_into().unwrap();
+    println!("x = {}", x);
+    println!("y = {}", y );
 }
 
 struct AnyStruct {
@@ -39,7 +25,7 @@ const BOOL_FIXED_SIZE_ARRAY: [bool; 2] = [true, false];
 
 fn printConstants() {
     println!("{}", ONE_HOUR_IN_SECONDS);
-    // println!("{}", STRUCT_INSTANCE);  - Can't print Structs
+    // println!("{}", STRUCT_INSTANCE);  - Can't print Structs in cairo. NEed to figure this out.
     // println!("{}", ENUM_INSTANCE); - Can't print Enums
     // println!("{}", BOOL_FIXED_SIZE_ARRAY); - Can't print Arrays.
 
